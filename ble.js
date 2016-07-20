@@ -14,7 +14,7 @@ noble.on('stateChange', function (state) {
     console.log(state);
     if (state === 'poweredOn') {
         status = "Disconnected / Scanning";
-        noble.startScanning([], true);
+        noble.startScanning(['cdeacb8052354c07884693a37ee6b86d'], true);
     } else {
         status = "No BLE Available / NOT Scanning";
         noble.stopScanning();
@@ -58,7 +58,7 @@ noble.on('discover', function (peripheral) {
         peripheral.once('disconnect', function () {
             console.log('disconnected');
             status = "Disconnected / Scanning";
-            noble.startScanning([], true);
+            noble.startScanning(['cdeacb8052354c07884693a37ee6b86d'], true);
             connecting = false;
         });
     }
