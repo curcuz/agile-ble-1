@@ -1,0 +1,35 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
+
+# Install apt dependencies
+RUN apt-get clean && apt-get update && apt-get install -y \
+  apt-utils \
+  wget \
+  curl \
+  build-essential \
+  python-dev \
+  python-pip \
+  bluetooth \
+  bluez \
+  bluez-firmware \
+  libbluetooth-dev \
+  libudev-dev \
+  libdbus-1-dev \
+  libexpat-dev && rm -rf /var/lib/apt/lists/*
+
+# resin-sync will always sync to /usr/src/app, so code needs to be here.
+WORKDIR /usr/src/app
+
+# Move package to filesystem
+COPY app/package.json ./
+
+# NPM i app
+RUN npm i  --prefix /usr/src/app
+
+# copy app/ directory into WORKDIR
+COPY app/ ./
+
+## uncomment if you want systemd
+ENV INITSYSTEM on
+
+# Start app
+CMD ["bash", "/usr/src/app/start.sh"]
