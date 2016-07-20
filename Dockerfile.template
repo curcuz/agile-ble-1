@@ -1,3 +1,4 @@
+# since we use the template feature, we can target the application arch
 FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 
 # Install apt dependencies
